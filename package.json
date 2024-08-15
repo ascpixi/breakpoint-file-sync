@@ -3,6 +3,13 @@
   "displayName": "breakpoint-file-sync",
   "description": "Automatically synchronizes breakpoints with specified files",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ascpixi/vscode-breakpoint-file-sync"
+  },
+  "bugs": {
+    "url": "https://github.com/ascpixi/vscode-breakpoint-file-sync/issues"
+  },
   "author": {
     "name": "ascpixi",
     "url": "https://ascpixi.dev"
