@@ -1,6 +1,6 @@
 {
   "name": "breakpoint-file-sync",
-  "displayName": "breakpoint-file-sync",
+  "displayName": "Breakpoint File Sync",
   "description": "Automatically synchronizes breakpoints with specified files",
   "version": "1.0.0",
   "repository": {
