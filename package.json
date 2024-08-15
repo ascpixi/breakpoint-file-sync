@@ -1,0 +1,112 @@
+{
+  "name": "breakpoint-file-sync",
+  "displayName": "breakpoint-file-sync",
+  "description": "Automatically synchronizes breakpoints with specified files",
+  "version": "1.0.0",
+  "author": {
+    "name": "ascpixi",
+    "url": "https://ascpixi.dev"
+  },
+  "publisher": "ascpixi",
+  "icon": "./etc/icon.png",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Debuggers",
+    "Other"
+  ],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Breakpoint File Sync",
+      "properties": {
+        "breakpointFileSync.files": {
+          "type": "array",
+          "description": "Specifies the files to synchronize breakpoints with.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["custom", "json"],
+                "description": "Describes the type of serialization to use."
+              },
+              "matchingPath": {
+                "type": "string",
+                "description": "A regular expression that matches the paths of source files that should be included in the file."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the file. If not absolute, will be relative to the workspace folder."
+              }
+            },
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": { "const": "custom" },
+                  "filePrefix": {
+                    "type": "string",
+                    "default": "",
+                    "description": "A string to prepend before any breakpoint entries to the generated file."
+                  },
+                  "format": {
+                    "type": ["string", "array"],
+                    "items": { "type": "string" },
+                    "default": "$path:$line",
+                    "description": "The format of the breakpoint entries. If an array, all of its entries will be joined with a new-line character. Available variables: $path, $absPath, $filename, $line, $condition, $hitCount."
+                  },
+                  "fileSuffix": {
+                    "type": "string",
+                    "default": "",
+                    "description": "A string to append after all breakpoint entries to the generated file."
+                  },
+                  "endWithNewLine": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If 'true', all breakpoint entries will end with a new-line character (\\n)."
+                  },
+                  "skipDisabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "If 'true', disabled breakpoints will not be included."
+                  },
+                  "undefinedPlaceholder": {
+                    "type": "string",
+                    "default": "",
+                    "description": "If a given variable is not available (e.g. not provided), but is referenced in the 'format' field, this value will be used as a placeholder."
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "kind": { "const": "json" }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.92.0",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0"
+  }
+}
